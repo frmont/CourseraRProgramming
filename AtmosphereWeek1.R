@@ -29,3 +29,4 @@ mean(june[,4])
 #What was the maximum ozone value in the month of May (i.e. Month is equal to 5)?
 may <- subset(data, Month == 5)
 max(may[,1], na.rm = TRUE) #strip NA before calculation is done
+
