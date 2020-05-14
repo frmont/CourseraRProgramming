@@ -1,13 +1,25 @@
-pollutantmean <- function(directory = "specdata", pollutant, id= 1:322){
+## create a function that will calculate the mean of one of two pollutants from 332 .csv files
+
+pollutantmean <- function(directory, pollutant, id= 1:322){
     message(paste("Working directory is: ",getwd()))
-    allfiles <- list.files(getwd(), full.names=TRUE)        #obtain list of sensor files in specdata directory
-    files <- data.frame()      # create empty data frame
-    for (i in id) {            #loop through files in subset list and
-      files <- rbind(allfiles, read.csv(allfiles[i]))      # subset list of sensor files
-       }                                                   # read the csv file                                                         
-                                                           # bind the "collector" data frame
-    mean(files[[pollutant]], na.rm=TRUE)  #calculate mean and return to parent environment
-                                     #double square brackets->numeric vector, needed by "mean" (no a data frame)
+    allfiles <- list.files(directory, full.names=TRUE)  # obtain list of sensor files in specdata directory
+    dat <- data.frame()                                 # create empty data frame
+    for (i in id) {                                     # loop through files 
+      dat <- rbind(dat, read.csv(allfiles[i]))          # read .csv, subset list, bind the "collector" data frame
+       }                                   
+    mean(dat[,pollutant], na.rm=TRUE)                   # calculate mean and return to parent environment
     }
+
+pollutantmean("specdata", "sulfate", 1:10)              # [1] 4.064128
+pollutantmean("specdata", "nitrate", 70:72)             # [1] 1.706047
+pollutantmean("specdata", "nitrate", 23)                # [1] 1.280833
+
+
+
+
+
+
+
+
 
 
