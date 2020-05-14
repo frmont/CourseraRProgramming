@@ -1,10 +1,14 @@
-complete <- function(directory, id=1:332) {   
+setwd("~/Desktop/GoogleDrive/R_Programming/CourseraRProgramming/Week2")
+complete <- function(directory, id) {
+ 
   allfiles <- list.files(directory, full.names=TRUE)
   for (i in id) {
-    numcomplcases <- sum(complete.cases(read.csv(text=allfiles[i]))) # is.numeric(numcomplcases) [1] TRUE
+    
+    numcomplcases <- sum(complete.cases(read.csv(allfiles[i]))) # is.numeric(numcomplcases) [1] TRUE
     dat <- data.frame(id = i, nobs = numcomplcases, stringsAsFactors = FALSE) # create empty dataframe
-    rbind(dat) # read directory and report completely observed cases
+    x <- rbind(dat)
   }
-  }
-
+  print(x)
+}
 complete("specdata", 1)
+
