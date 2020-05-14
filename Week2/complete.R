@@ -1,18 +1,12 @@
-setwd("~/Desktop/GoogleDrive/R_Programming/CourseraRProgramming/Week2")
+# write a function that reads a directory full of files and reports the number of completely observed cases in each data file.
+
 complete <- function(directory, id) {
- 
   allfiles <- list.files(directory, full.names=TRUE)
   d=NULL
-   # create empty dataframe
   for (i in id) {
-    
     numcomplcases <- sum(complete.cases(read.csv(allfiles[i]))) # is.numeric(numcomplcases) [1] TRUE
     d = rbind(d, data.frame(id = i, nobs = numcomplcases, stringsAsFactors = FALSE))
-  
   }
-  print(d)
+  d
 }
-complete("specdata", 1)
-complete("specdata", c(2, 4, 8, 10, 12))
-complete("specdata", 30:25)
-complete("specdata", 3)
+
