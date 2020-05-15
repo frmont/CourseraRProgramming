@@ -1,6 +1,7 @@
 # write a function that reads a directory full of files and reports the number of completely observed cases in each data file.
 
 complete <- function(directory, id) {
+  setwd("~/Desktop/GoogleDrive/R_Programming/CourseraRProgramming/Week2")
   allfiles <- list.files(directory, full.names=TRUE)
   d=NULL
   for (i in id) {
