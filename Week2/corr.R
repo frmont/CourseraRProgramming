@@ -3,23 +3,22 @@
 # where the number of completely observed cases (on all variables) is greater than the threshold.
 
 corr <- function(directory, threshold=0){                 # the dafault is 0
-  setwd("~/Desktop/GoogleDrive/R_Programming/CourseraRProgramming/Week2")
-  source("complete.R")
-  compl <- complete(directory="specdata", 1:332)
+  setwd(directory)
+  source("/Users/FM/Desktop/GoogleDrive/R_Programming/CourseraRProgramming/Week2/complete.R")
   
-  compl %>% filter(nobs > threshold)                       # list of the nobs > threshold
+  comp <- complete(directory="specdata", 1:332)
+  comp <- comp[comp$nobs >= threshold,]                    # list of the nobs > threshold
   
   allfiles <- list.files("specdata", full.names=TRUE)
-  fullfiles<- do.call("rbind", lapply(allfiles, read.csv))
-                                                                
-  sub <- data.frame()             
-  sub <- na.omit(subset(fullfiles, id %in% compl$id))   # only take the columns of allfiles containing the id in compl
-                                                        # remove rows with at least one NA
-  sulf <- dplyr::pull(sub, sulfate)
-  nit <- dplyr::pull(sub, nitrate)
-    
-    cov(sulf, nit) 
+  my_corr <- numeric()                                      # empty vector to store correlation values per monitor
 
+  for(i in comp$id){
+    data <- read.csv(allfiles[i])                          
+    my_corr <- c(my_corr, cor(data$sulfate, data$nitrate, use = "pairwise.complete.obs")) 
+  }                                                         # fill the vector with the correlation between the two columns
+  my_corr
 }
+
 cr <- corr("specdata", 150)
 head(cr)
+summary(cr)
